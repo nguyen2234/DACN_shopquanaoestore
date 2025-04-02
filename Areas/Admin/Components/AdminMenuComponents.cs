@@ -13,7 +13,7 @@ namespace estore.Areas.Admin.Components
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var mnList =(from m in _context.adminMenus
+            var mnList =(from m in _context.tblAdminMenu
                          where (m.IsActive ==true)
                          select m).ToList();
             return await Task.FromResult((IViewComponentResult)View("Default", mnList));
