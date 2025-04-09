@@ -17,8 +17,8 @@ namespace estore.Models
         public int CategoriId { get; set; }
         //public int Stock { get; set; }
         public string? Images { get; set; }
-        [NotMapped]
-        public IFormFile? ImageFile { get; set; }
+        //[NotMapped]
+        //public IFormFile? ImageFile { get; set; }
         public string? Link { get; set; }
         public bool? IsActive { get; set; }
        // danh sách kích thước

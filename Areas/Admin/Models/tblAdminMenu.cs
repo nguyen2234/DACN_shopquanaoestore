@@ -4,11 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace estore.Areas.Admin.Models
 {
     [Table("tblAdminMenu")]
-<<<<<<< HEAD:Areas/Admin/Models/tblAdminMenu.cs
+
     public class tblAdminMenu
-=======
-    public class AdminMenu
->>>>>>> 8f89f633277344c688e9ace82aab077c686073b2:Areas/Admin/Models/AdminMenu.cs
+
     {
         [Key]
         public long AdminMenuID { get; set; }

@@ -1,0 +1,47 @@
+﻿@using estore.Areas.Admin.Models;
+@model IList<User>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h2>Danh sách người dùng</h2>
+    </div>
+    <section class="section-bg dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body mt-4">
+                        <table class="table table-borderless datatable">
+                            <thead>
+                                <tr>
+                                    <th class="col-1 text-center">#</th>
+                                    <th class="col-1 text-center">UserName</th>
+                                    <th class="col-2 text-center">Email</th>
+                                    <th class="col-2 text-center">Password</th>
+                                    <th class="col-1 text-center">Ẩn/Hiện</th>
+                                    <th class="col-1 text-center">Chức năng</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th class="text-center" scope="row">@item.UserID</th>
+                                        <td class="text-center">@item.UserName</td>
+                                        <th class="text-center">@item.Email</th>
+                                        <th class="text-center">@item.Password</th>
+                                        <td class="text-center">@item.IsActive</td>
+                                        
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

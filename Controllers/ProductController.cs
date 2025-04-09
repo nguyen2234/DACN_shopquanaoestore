@@ -1,4 +1,5 @@
 ﻿using estore.Models;
+using estore.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace estore.Controllers
@@ -19,14 +20,16 @@ namespace estore.Controllers
         [Route("Product/details/{id}")]
         public IActionResult Details(int id)
         {
+           
+        
             var product = _contex.tblProducts.FirstOrDefault(o => o.Id == id);
             if (product == null)
                 return NotFound();
-            var size = _contex.tblProductSizes.ToList();
-            var detail = _contex.TblProductDetails.Where(p => p.Id == id).ToList();
-            ViewBag.Size = size;
-            ViewBag.Detail = detail;
-            ViewBag.Product = product;
+            //var size = _contex.tblProductSizes.ToList();
+            //var detail = _contex.TblProductDetails.Where(p => p.Id == id).ToList();
+            //ViewBag.Size = size;
+            //ViewBag.Detail = detail;
+            //ViewBag.Product = product;
             return View(product);
 
         }

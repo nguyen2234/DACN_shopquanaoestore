@@ -1,0 +1,20 @@
+﻿ @model IList<Slide>;
+
+<div class="product_image_area" style="margin-top: 20px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="product_img_slide owl-carousel">
+                    @foreach (var sl in Model)
+                    {
+                        <div class="single_product_img">
+                            <img src="@sl.Image" alt="#" class="img-fluid">
+                        </div>
+                    }                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

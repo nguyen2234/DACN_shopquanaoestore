@@ -7,7 +7,7 @@
         <h2>Thêm mới sản phẩm </h2>
     </div>
     <div class="container shadow p-5">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All"></div>
             <div class="form-row">
                 <div class="form-group">
@@ -36,18 +36,15 @@
                     <span asp-validation-for="Title" class="alert-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Contents">Contents</label>
+                    <label asp-for="Contents">Nội dung</label>
                     <input type="text" class="form-control mb-3" asp-for="Contents" placeholder="Enter Contents" />
                     <span asp-validation-for="Contents" class="alert-danger"></span>
                 </div>
-                @* <div class="form-group"> *@
-                @*     <label asp-for="Coverphoto" class="control-label"></label> *@
-                @*     <div class="custom-file"> *@
-                @*         <input asp-for="Coverphoto" class="custom-file-input" id="customFile"/> *@
-                @*         <label class="custom-file-label" for="customFile">Chọn t</label> *@
-                @*     </div> *@
-                @* </div> *@
-
+                <div class="form-group">
+                    <label asp-for="Images">Hình ảnh</label>
+                    <input type="text" class="form-control mb-3" asp-for="Images" placeholder="Nhập đường dẫn" />
+                    <span asp-validation-for="Contents" class="alert-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="Price">Price</label>
                     <input type="text" class="form-control mb-3" asp-for="Price" placeholder="Enter Price" />

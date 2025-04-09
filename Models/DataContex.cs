@@ -12,5 +12,7 @@ namespace estore.Models
         public DbSet<TblProductDetails> TblProductDetails{ get; set; }
         public DbSet<TblProductSize> tblProductSizes{ get; set; } 
         public DbSet<AdminUser> AdminUsers{ get; set; }
+        public DbSet<User> users{ get; set; }
+        public DbSet<Slide> slides{ get; set; }
     }
 }

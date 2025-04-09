@@ -29,7 +29,7 @@ namespace estore.Areas.Admin.Controllers
             var check = _context.AdminUsers.Where(u => (u.UserName == user.UserName) && (u.Password == pw)).FirstOrDefault();
             if (check == null)
             {
-                Functions._Message = "Invalid username and password!";
+                Functions._Message = "Tài khoản hoặc mật khẩu không đúng!";
                 return RedirectToAction("Index", "Login");
             }
             Functions._Message = string.Empty;

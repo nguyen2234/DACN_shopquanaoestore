@@ -15,6 +15,12 @@ namespace estore.Utilities
         public static string _Message = string.Empty;
         public static string _MessageEmail = string.Empty;
 
+        public static int _userid = 0;
+        public static string _username = string.Empty;
+        public static string _email = string.Empty;
+        public static string _message = string.Empty;
+        public static string _messageemail = string.Empty;
+
         public static string MD5Hash(string text)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
@@ -37,6 +43,12 @@ namespace estore.Utilities
         public static bool IsLogin()
         {
             if (string.IsNullOrEmpty(Functions._UserName) || string.IsNullOrEmpty(Functions._Email) || (Functions._UserID <= 0))
+                return false;
+            return true;
+        }
+        public static bool islogin()
+        {
+            if (string.IsNullOrEmpty(Functions._username) || string.IsNullOrEmpty(Functions._email) || (Functions._userid <= 0))
                 return false;
             return true;
         }

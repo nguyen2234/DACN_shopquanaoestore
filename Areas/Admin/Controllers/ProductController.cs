@@ -55,31 +55,28 @@ namespace estore.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(TblProducts pd, IFormFile ImageFile)
+        public IActionResult Create(TblProducts pd)
         {
 
 
             if (ModelState.IsValid)
             {
-                //if (ImageFile != null && ImageFile.Length > 0)
+                //if (pd.ImageFile != null)
                 //{
-                //    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                //    if (!Directory.Exists(uploadsFolder))
-                //        Directory.CreateDirectory(uploadsFolder);
-
-                //    string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
-                //    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(pd.ImageFile.FileName);
+                //    string filePath = Path.Combine("wwwroot/uploads", fileName);
 
                 //    using (var stream = new FileStream(filePath, FileMode.Create))
                 //    {
-                //        ImageFile.CopyTo(stream);
+                //        await pd.ImageFile.CopyToAsync(stream);
                 //    }
 
-                //    pd.Images = $"/images/{uniqueFileName}";
+                //    pd.Images = "/uploads/" + fileName;
                 //}
 
+
                 _context.tblProducts.Add(pd);
-                _context.SaveChanges();
+               _context.SaveChanges();
                 return RedirectToAction("Index");
 
             }
@@ -109,23 +106,31 @@ namespace estore.Areas.Admin.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(TblProducts pd)
+        public IActionResult Edit(TblProducts pd)
         {
-            if (pd.ImageFile != null)
-            {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(pd.ImageFile.FileName);
-                string filePath = Path.Combine("wwwroot/uploads", fileName);
+            
+            
+                //if (pd.ImageFile != null)
+                //{
+                //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(pd.ImageFile.FileName);
+                //    string filePath = Path.Combine("wwwroot/uploads", fileName);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await pd.ImageFile.CopyToAsync(stream);
-                }
+                //    using (var stream = new FileStream(filePath, FileMode.Create))
+                //    {
+                //        await pd.ImageFile.CopyToAsync(stream);
+                //    }
 
-                pd.Images = "/uploads/" + fileName; // Lưu đường dẫn ảnh vào DB
-            }
+                //    pd.Images = "/uploads/" + fileName;
+                //}
+            
+            
+            
 
+            //_context.tblProducts.Update(pd);
+            //await _context.SaveChangesAsync();
+            //return RedirectToAction("Index");
             _context.tblProducts.Update(pd);
-            await _context.SaveChangesAsync();
+             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
