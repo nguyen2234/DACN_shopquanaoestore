@@ -1,4 +1,4 @@
-﻿@model estore.Models.TblProducts
+﻿@model estore.Models.Products
 @{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -8,17 +8,19 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6 ">
-            <label asp-for="Id">ID</label>
-            <input type="text" class="form-cotnrol mb-3" asp-for="Id" disabled />
+            <label asp-for="ProductId">ID</label>
+            <input type="text" class="form-control mb-3" asp-for="ProductId" disabled />
         </div>
+         
         <div class="form-group col-md-6">
             <label asp-for="Name">Tên sản phẩm</label>
-            <input type="text" class="form-cotnrol mb-3" asp-for="Name" disabled />
+            <input type="text" class="form-control mb-3" asp-for="Name" disabled />
         </div>
     </div>
-    <!---->
+    
+
     <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ProductId" />
         <a class="btn btn-lg btn-warning p-2 mr-5" href="javascript:history.back()">
             <i class="bi bi-arrow-left-circle"></i> Trở về
         </a>
@@ -27,3 +29,4 @@
         </button>
     </form>
 </main>
+

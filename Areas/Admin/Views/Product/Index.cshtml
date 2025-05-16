@@ -1,80 +1,64 @@
 ﻿@using estore.Models;
-@model IList<TblProducts>
+@model IList<Products>
 @{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-<style>
-    .img-thumbnail {
-        max-width: 100px;
-        max-height: 100px;
-        object-fit: cover;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-    }
-</style>
+
 <main id="main" class="main">
-    <div class="pagetitle">
-        <h2>Danh sách sản phẩm</h2>
-    </div>
-    <p>
-        <a type="button" class="btn btn-success" asp-area="Admin" asp-controller="Product" asp-action="Create">
-            <i class="bi bi-file-earmark-text me-1">Thêm Sản phẩm</i>
-        </a>
-        <section class="sectio dashboard">
-            <div class="row">
-                <div class="col-12">
+    <h2 class="mb-4">Danh sách sản phẩm</h2>
+
+    <a asp-action="Create" class="btn btn-primary mb-3">➕ Thêm sản phẩm</a>
+    <section class="sectio dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
                     <div class="card-body mt-4">
                         <table class="table table-borderless datatable">
-                            <thead>
+                            <thead class="table-dark text-center">
                                 <tr>
-                                    <th>STT</th>
-                                    <th>Hình ảnh</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Giá tiền</th>
-                                    <th>Danh mục</th>
-                                    <th>Ẩn hiện</th>
-                                    <th>Chức năng</th>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Tên sản phẩm</th>
+                                    <th class="text-center">Giá tiền</th>
+                                    <th class="text-center">Danh mục</th>
+                                    <th class="text-center">Hiển thị</th>
+                                    <th class="text-center">Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <th class="text-center" scope="row">@item.Id</th>
+                                    <tr class="text-center">
+                                        <td>@item.ProductId</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Price.ToString("N0") đ</td>
+                                        <td>@item.Categori?.Name</td>
                                         <td>
-                                            <img src="@item.Images" class="img-thumbnail" />
+                                            @if (item.IsActive == true)
+                                            {
+                                                <span class="badge bg-success">Hiển thị</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Ẩn</span>
+                                            }
                                         </td>
-                                        <td class="text-center" scope="row">@item.Name</td>
-                                        <td class="text-center" scope="row">@item.Price</td>
-                                        <td class="text-center" scope="row">
-                                            @if (item.CategoriId == 1)
-                                            {
-                                                <span>Quần áo</span>
-                                            }
-                                            else if (item.CategoriId == 2)
-                                            {
-                                                <span>Áo phông</span>
-                                            }
-                                            else if (item.CategoriId == 3)
-                                            {
-                                                <span>Váy đầm</span>
-                                            }
-
-                                        </td>
-                                        <td class="text-center" scope="row">@item.IsActive</td>
-                                        <td class="text-center" scope="row">
-                                            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm"
-                                               title="Chỉnh sửa"><i class="bi bi-pencil"></i></a>
-                                            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm"
-                                               title="Xóa"><i class="bi bi-trash"></i></a>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-warning me-1">
+                                                <i class="bi bi-pencil"></i> Sửa
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này không?');">
+                                                <i class="bi bi-trash"></i> Xoá
+                                            </a>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
+
                         </table>
                     </div>
                 </div>
             </div>
-        </section>
-    </p>
+        </div>
+    </section>
+
 </main>

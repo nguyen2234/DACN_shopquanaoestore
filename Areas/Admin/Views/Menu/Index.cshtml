@@ -1,5 +1,5 @@
 ﻿@using estore.Models;
-@model IList<TblMenu>
+@model IList<Menu>
 @{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -13,39 +13,42 @@
             <section class="sectio dashboard">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card-body mt-4">
-                            <table class="table table-borderless datatable">
-                                <thead>
-                                    <tr>
-                                        <th class="col-1 text-center">#</th>
-                                        <th class="col-1 text-center">Tên Menu</th>
-                                        <th class="col-1 text-center">Mức</th>
-                                        <th class="col-1 text-center">Bố mẹ</th>
-                                        <th class="col-1 text-center">Thứ tự con</th>
-                                        <th class="col-1 text-center">Ẩn hiện</th>
-                                        <th class="col-1 text-center">Chức năng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
+                        <div class="card recent-sales overflow-auto">
+                            <div class="card-body mt-4">
+                                <table class="table table-borderless datatable">
+                                    <thead>
+
                                         <tr>
-                                            <td class="text-center" scope="row">@item.MenuId</td>
-                                            <td class="text-left text-primary" scope="row"><a asp-area="Admin" asp-controller="Menu" asp-action="Details" asp-route-id="@item.MenuId">@item.MenuName</a></td>
-                                            <td class="text-center" scope="row">@item.Levels</td>
-                                            <td class="text-center" scope="row">@item.ParentId</td>
-                                            <td class="text-center" scope="row">@item.MenuOrder</td>
-                                            <td class="text-center" scope="row">@item.IsActive</td>
-                                            <td class="text-center" scope="row">
-                                                <a asp-area="Admin" asp-controller="Menu" asp-action="Edit" asp-route-id="@item.MenuId" class="btn btn-primary btn-sm"
-                                                   title="Chỉnh sửa"><i class="bi bi-pencil"></i></a>
-                                                <a asp-area="Admin" asp-controller="Menu" asp-action="Delete" asp-route-id="@item.MenuId" class="btn btn-danger btn-sm"
-                                                   title="Xóa"><i class="bi bi-trash"></i></a>
-                                            </td>
+                                            <th class="col-1 text-center">#</th>
+                                            <th class="col-1 text-center">Tên Menu</th>
+                                            <th class="col-1 text-center">Mức</th>
+                                            <th class="col-1 text-center">Bố mẹ</th>
+                                            <th class="col-1 text-center">Thứ tự con</th>
+                                            <th class="col-1 text-center">Ẩn hiện</th>
+                                            <th class="col-1 text-center">Chức năng</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="text-center" scope="row">@item.MenuId</td>
+                                                <td class="text-left text-primary" scope="row"><a asp-area="Admin" asp-controller="Menu" asp-action="Details" asp-route-id="@item.MenuId">@item.MenuName</a></td>
+                                                <td class="text-center" scope="row">@item.Levels</td>
+                                                <td class="text-center" scope="row">@item.ParentId</td>
+                                                <td class="text-center" scope="row">@item.MenuOrder</td>
+                                                <td class="text-center" scope="row">@item.IsActive</td>
+                                                <td class="text-center" scope="row">
+                                                    <a asp-area="Admin" asp-controller="Menu" asp-action="Edit" asp-route-id="@item.MenuId" class="btn btn-primary btn-sm"
+                                                       title="Chỉnh sửa"><i class="bi bi-pencil"></i></a>
+                                                    <a asp-area="Admin" asp-controller="Menu" asp-action="Delete" asp-route-id="@item.MenuId" class="btn btn-danger btn-sm"
+                                                       title="Xóa"><i class="bi bi-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

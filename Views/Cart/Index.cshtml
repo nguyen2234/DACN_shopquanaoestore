@@ -1,0 +1,126 @@
+﻿@model IEnumerable<estore.Models.Cart>
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    decimal total = 0;
+    int STT = 1;
+}
+<style>
+    .btn-delete {
+        background-color: #dc3545; /* đỏ tươi */
+        color: white;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-family: 'Segoe UI', sans-serif;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-delete:hover {
+            background-color: #c82333; /* đỏ đậm hơn khi hover */
+            cursor: pointer;
+        }
+
+    .btn-reload {
+        background-color: aliceblue;
+        color: black;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 30px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-reload:hover {
+            background-color: forestgreen;
+            cursor: pointer;
+        }
+</style>
+<section class="cart_area section_padding">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            decimal itemTotal = item.Products.Price * item.Quantity;
+                            total += itemTotal;
+                            <tr>
+                                <td>@STT</td>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="@item.Products.Images" alt="" />
+                                        </div>
+                                        <div class="media-body">
+                                            <p>@item.Products.Name</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@item.ProductSize.Size</td>
+                                <td>
+                                    <h5>@item.Products.Price</h5>
+                                </td>
+                                <td>
+                                    <form method="post" asp-action="UpdateQuantity" asp-controller="Cart">
+                                        <input type="hidden" name="cartId" value="@item.CartId" />
+                                        <input type="number" name="quantity" value="@item.Quantity" min="1" max="20" />
+                                        <button type="submit" class="btn-reload"><i class="fa fa-sync-alt"></i></button>
+                                        <p style=" font-size:small">Load lại khi có thay<br> đổi về số lượng</p>
+                                    </form>
+                                </td>
+                                <td>
+                                    <h5>@itemTotal.ToString("N0")</h5>
+                                </td>
+                                <td>
+                                    <form method="post" asp-action="DeleteCart" asp-controller="Cart">
+                                        <input type="hidden" name="cartId" value="@item.CartId" />
+                                        <button type="submit" class="btn-delete">
+                                            <i class="fa fa-trash"></i> Xóa
+                                        </button>
+                                    </form>
+                                </td>
+
+
+                            </tr>
+                            STT++;
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>Tổng thanh toán</h5>
+                            </td>
+                            <td>
+                                <h5>@total.ToString("N0") VNĐ</h5>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="checkout_btn_inner float-right">
+                    <a class="btn_1" href="#">Continue Shopping</a>
+                    <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+

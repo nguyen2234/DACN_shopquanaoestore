@@ -1,4 +1,4 @@
-﻿@model estore.Models.TblProducts
+﻿@model estore.Models.Products
 @{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -11,45 +11,51 @@
             <div asp-validation-summary="All"></div>
             <div class="form-row">
                 <div class="form-group">
-                    <label asp-for="Name">Name</label>
-                    <input type="text" class="form-control mb-3" asp-for="Name" placeholder="Nhap ten " />
+                    <label asp-for="Name">Tên sản phẩm</label>
+                    <input type="text" class="form-control mb-3" asp-for="Name" />
                     <span asp-validation-for="Name" class="alert-danger"></span>
                 </div>
-            </div>
-            <div class="form-row">
                 <div class="form-group">
-                    <label asp-for="CategoriId">Categoryid</label>
-                    <select asp-for="CategoriId" class="form-select" id="CategoriId">
-                        <option value="1">Quần áo</option>
-                        <option value="2">Áo phông</option>
-                        <option value="3">Váy đầm</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Link">Link</label>
-                    <input type="text" class="form-control mb-3" asp-for="Link" placeholder="Enter Link" />
+                    <label asp-for="Link">Đường dẫn</label>
+                    <input type="text" class="form-control mb-3" asp-for="Link" />
                     <span asp-validation-for="Link" class="alert-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Title">Title</label>
-                    <input type="text" class="form-control mb-3" asp-for="Title" placeholder="Enter Title" />
+                    <label asp-for="Title">Tiêu đề</label>
+                    <input type="text" class="form-control mb-3" asp-for="Title" />
                     <span asp-validation-for="Title" class="alert-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Contents">Nội dung</label>
-                    <input type="text" class="form-control mb-3" asp-for="Contents" placeholder="Enter Contents" />
+                    <textarea class="form-control mb-3" asp-for="Contents">
+                    </textarea>
                     <span asp-validation-for="Contents" class="alert-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Images">Hình ảnh</label>
-                    <input type="text" class="form-control mb-3" asp-for="Images" placeholder="Nhập đường dẫn" />
+                    <input type="text" class="form-control mb-3" asp-for="Images" />
                     <span asp-validation-for="Contents" class="alert-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Price">Price</label>
-                    <input type="text" class="form-control mb-3" asp-for="Price" placeholder="Enter Price" />
+                    <label asp-for="Price">Giá sản phẩm</label>
+                    <input type="text" class="form-control mb-3" asp-for="Price" />
                     <span asp-validation-for="Price" class="alert-danger"></span>
                 </div>
+                <div class="form-group mb-3">
+                    <label>Chọn danh mục</label>
+                    <select asp-for="CategoriId" class="form-control">
+                        <option value="0">-- Danh mục --</option>
+                        <option value="1">Áo nam</option>
+                        <option value="2">Áo nữ</option>
+                        <option value="3">Quần nam</option>
+                        <option value="4">Quần nữ</option>
+                        <option value="5">Phụ kiện</option>
+                        <option value="6">Giày nam</option>
+                        <option value="7">Giày nữ</option>
+                    </select>
+                </div>
+                <hr />
+                
                 <div class="form-group mt-5 mb-5">
                     <label>
                         @Html.CheckBox("IsActive", false)
@@ -63,3 +69,6 @@
 
     </div>
 </main>
+
+
+

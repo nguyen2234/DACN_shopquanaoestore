@@ -1,43 +1,57 @@
 ﻿@using estore.Models;
-@model TblProducts;
+@using estore.Utilities;
+@model Products;
 @{
-	Layout = "/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Chi tiết sản phẩm";
 }
-<div class="product_image_area">
+
+<main>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <div class="product_img_slide owl-carousel">
-                    <div class="single_product_img">
-                        <img src="~/assets/img/product/single_product.png" alt="#" class="img-fluid">
+        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+            <input name="ProductId" value="@Model.ProductId" hidden />
+            <input name="User" value="@Functions._userid" hidden />
+
+            <div class="row product-btn d-flex justify-content-between mb-4">
+                <h2>@Model.Name</h2>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <img src="@Model.Images" class="img-fluid rounded border" alt="@Model.Name" />
+                </div>
+                <div class="col-md-7">
+                    <h4>@Model.Title</h4>
+                    <p><strong>Giá:</strong> @Model.Price.ToString("N0") đ</p>
+                    <p><strong>Danh mục:</strong> @Model.Categori?.Name</p>
+
+                    <div class="form-group">
+                        <label for="SizeId">Chọn size:</label>
+                        <select name="SizeId" class="form-control" id="SizeId">
+                            <option value="0" disabled>Vui lòng lựa chọn size</option>
+                            <option value="1">S</option>
+                            <option value="2">M</option>
+                            <option value="3">L</option>
+                            <option value="4">XL</option>
+                            <option value="5">XXL</option>
+                        </select>
                     </div>
+                    <div class="form-group mt-2">
+                        <label for="Quantity">Số lượng muốn mua:</label>
+                        <input type="number" name="Quantity" class="form-control w-50" value="1" min="1" />
+                    </div>
+
+                    <button type="submit" class="btn btn-success mt-3">Thêm vào giỏ hàng</button>
                 </div>
             </div>
-            <div class="col-lg-8">
-                <div class="single_product_text text-center">
-                    <h3>
-                        Foam filling cotton slow <br>
-                        rebound pillows
-                    </h3>
-                    <p>
-                        Seamlessly empower fully researched growth strategies and interoperable internal or “organic” sources. Credibly innovate granular internal or “organic” sources whereas high standards in web-readiness. Credibly innovate granular internal or organic sources whereas high standards in web-readiness. Energistically scale future-proof core competencies vis-a-vis impactful experiences. Dramatically synthesize integrated schemas. with optimal networks.
-                    </p>
-                    <div class="card_area">
-                        <div class="product_count_area">
-                            <p>Quantity</p>
-                            <div class="product_count d-inline-block">
-                                <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
-                                <input class="product_count_item input-number" type="text" value="1" min="0" max="10">
-                                <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
-                            </div>
-                            <p>$5</p>
-                        </div>
-                        <div class="add_to_cart">
-                            <a href="#" class="btn_3">add to cart</a>
-                        </div>
-                    </div>
-                </div>
+        </form>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4 class="mb-3">📌 Mô tả sản phẩm chi tiết</h4>
+                <p style="line-height: 1.8; font-size: 1.05rem;">
+                    @Model.Description
+                </p>
             </div>
         </div>
     </div>
-</div>
+</main>

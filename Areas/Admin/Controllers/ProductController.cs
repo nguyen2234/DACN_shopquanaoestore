@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace estore.Areas.Admin.Controllers
 {
@@ -9,13 +10,17 @@ namespace estore.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly DataContex _context;
-        public ProductController( DataContex contex)
+        public ProductController(DataContex contex)
         {
             _context = contex;
         }
         public IActionResult Index()
         {
-            var productlist = _context.tblProducts.OrderBy(p => p.Id).ToList();
+            var productlist = _context.tblProducts
+              .Include(p => p.Categori)           // Load danh mục liên quan
+              .OrderBy(p => p.CategoriId)         // Sắp xếp theo danh mục
+              .ToList();
+
             return View(productlist);
         }
 
@@ -31,20 +36,25 @@ namespace estore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var mn = _context.tblProducts.Find(id);
+            var mn = _context.tblProducts.Include(o => o.ProductDetails).FirstOrDefault(p => p.ProductId == id);
             if (mn == null)
                 return NotFound();
+            var details = _context.TblProductDetails.Where(o => o.ProductId == id).ToList();
+            _context.TblProductDetails.RemoveRange(details); //removerange xóa nhieudong
+
             _context.tblProducts.Remove(mn);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult Create()
         {
+            ViewBag.CategoryList = new SelectList(_context.categoris, "CategoriId", "Name");
+            ViewBag.SizeList = _context.tblProductSizes.ToList();
             var pdList = (from m in _context.tblProducts
                           select new SelectListItem()
                           {
                               Text = m.CategoriId.ToString(),
-                              Value = m.Id.ToString(),
+                              Value = m.ProductId.ToString(),
                           }).ToList();
             pdList.Insert(0, new SelectListItem()
             {
@@ -55,33 +65,26 @@ namespace estore.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(TblProducts pd)
+        public IActionResult Create(Products pd, int selectedSizeId, int quantity)
         {
+            // Thêm sản phẩm
+            _context.tblProducts.Add(pd);
+            _context.SaveChanges();
 
-
-            if (ModelState.IsValid)
+            // Nếu có chọn size và số lượng > 0 thì thêm ProductDetails
+            if (selectedSizeId > 0 && quantity > 0)
             {
-                //if (pd.ImageFile != null)
-                //{
-                //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(pd.ImageFile.FileName);
-                //    string filePath = Path.Combine("wwwroot/uploads", fileName);
-
-                //    using (var stream = new FileStream(filePath, FileMode.Create))
-                //    {
-                //        await pd.ImageFile.CopyToAsync(stream);
-                //    }
-
-                //    pd.Images = "/uploads/" + fileName;
-                //}
-
-
-                _context.tblProducts.Add(pd);
-               _context.SaveChanges();
-                return RedirectToAction("Index");
-
+                var detail = new ProductDetails
+                {
+                    ProductId = pd.ProductId,
+                    SizeId = selectedSizeId,
+                    Quantity = quantity
+                };
+                _context.TblProductDetails.Add(detail);
+                _context.SaveChanges();
             }
-            return View(pd);
 
+            return RedirectToAction("Index");
         }
         public IActionResult Edit(int? id)
         {
@@ -94,7 +97,7 @@ namespace estore.Areas.Admin.Controllers
                           select new SelectListItem()
                           {
                               Text = m.CategoriId.ToString(),
-                              Value = m.Id.ToString(),
+                              Value = m.ProductId.ToString(),
                           }).ToList();
             mnList.Insert(0, new SelectListItem()
             {
@@ -106,31 +109,15 @@ namespace estore.Areas.Admin.Controllers
 
         }
         [HttpPost]
-        public IActionResult Edit(TblProducts pd)
+        public IActionResult Edit(Products pd)
         {
-            
-            
-                //if (pd.ImageFile != null)
-                //{
-                //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(pd.ImageFile.FileName);
-                //    string filePath = Path.Combine("wwwroot/uploads", fileName);
-
-                //    using (var stream = new FileStream(filePath, FileMode.Create))
-                //    {
-                //        await pd.ImageFile.CopyToAsync(stream);
-                //    }
-
-                //    pd.Images = "/uploads/" + fileName;
-                //}
-            
-            
-            
-
-            //_context.tblProducts.Update(pd);
-            //await _context.SaveChangesAsync();
-            //return RedirectToAction("Index");
+            var item = _context.tblProducts.Include(o => o.ProductDetails).FirstOrDefault(p=>p.ProductId == pd.ProductId);
+            if (item == null)
+                return NotFound();
+            var details = _context.TblProductDetails.Where(o => o.ProductId == pd.ProductId).ToList();
+            _context.TblProductDetails.UpdateRange(details);
             _context.tblProducts.Update(pd);
-             _context.SaveChanges();
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 

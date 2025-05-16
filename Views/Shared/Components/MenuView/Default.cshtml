@@ -1,7 +1,6 @@
-﻿ @model IList<TblMenu>;
+﻿ @model IList<Menu>;
  @using estore.Utilities;
 <header>
-    <!-- Header Start -->
     <div class="header-area">
         <div class="main-header ">
             <div class="header-top top-bg d-none d-lg-block">
@@ -12,7 +11,7 @@
                         <!-- Logo -->
                         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a asp-controller="Home" asp-action="Index"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
@@ -48,44 +47,41 @@
                             </div>
                         </div>
                         <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
-                            <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
-                                <li class="d-none d-xl-block">
-                                    <div class="form-box f-right ">
-                                        <input type="text" name="Search" placeholder="Search products">
-                                        <div class="search-icon">
-                                            <i class="fas fa-search special-tag"></i>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class=" d-none d-xl-block">
-                                    <div class="favorit-items">
-                                        <i class="far fa-heart"></i>
-                                    </div>
-                                </li>
+                            <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">                              
                                 <li>
                                     <div class="shopping-card">
-                                        <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                        <a asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i></a>
                                     </div>
                                 </li>
 
                                 @if (!string.IsNullOrEmpty(Functions._username))
                                 {
-
-                                    <li class="d-none d-lg-block dropdow-menu">
-                                        <a class="btn header-btn" href="#">
+                                    <li class="dropdownad">
+                                        <a>
                                             <span>@Functions._username</span>
-                                            
-                                        </a><!-- End Profile Iamge Icon -->                                    
+                                            <i class="bi bi-chevron-down ms-1"></i>
+                                        </a>
+                                        <ul class="submenuad">
+                                            <li>
+                                                <a asp-controller="Order" asp-action="History">
+                                                    <i class="bi bi-clock-history"></i> Lịch sử đặt hàng
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Home" asp-action="Logout" class="text-danger">
+                                                    <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 }
                                 else
                                 {
-
-                                    <li class="d-none d-lg-block dropdow">
+                                    <li class="d-none d-lg-block">
                                         <a class="btn header-btn" asp-action="Index" asp-controller="Login">Đăng nhập</a>
                                     </li>
                                 }
-                                
+
                             </ul>
                         </div>
                         <!-- Mobile Menu -->

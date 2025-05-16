@@ -1,4 +1,4 @@
-﻿@model estore.Models.TblProducts
+﻿@model estore.Models.Products
 @{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -36,21 +36,73 @@
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
 
-                           
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Thông tin</button>
+                            </li>
 
                             <li class="nav-item">
                                 <button class="nav-link " data-bs-toggle="tab" data-bs-target="#profile-edit">Chỉnh sửa thông tin</button>
                             </li>
-                        </ul>
-                        <div class="tab-content pt-2">                           
 
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Cài đặt</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content pt-2">
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                @* <h5 class="card-title">About</h5> *@
+                                @* <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p> *@
+
+                                <h5 class="card-title">Thông tin chi tiết</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                    <div class="col-lg-9 col-md-8">@Html.Raw(Model.Title)</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Danh mục</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Categori?.Name</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Nội dung</div>
+                                    <div class="col-lg-9 col-md-8">@Html.Raw(Model.Contents)</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Country</div>
+                                    <div class="col-lg-9 col-md-8">USA</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Address</div>
+                                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                </div>
+
+                            </div>
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                                 <!-- Profile Edit Form -->
                                 <form method="post" asp-action="Edit" enctype="multipart/form-data">
                                     <div asp-validation-summary="All"></div>
                                     <div class="form-row">
-                                        <input type="text" class="form-control" asp-for="Id" type="hidden" />
+                                        <input class="form-control" asp-for="ProductId" type="hidden" />
                                         <div class="row mb-3">
                                             <label asp-for="Images" class="col-md-4 col-lg-3 col-form-label">Hình ảnh</label>
                                             <div class="col-md-8 col-lg-9">
@@ -68,11 +120,18 @@
                                         <div class="row mb-3">
                                             <label asp-for="CategoriId" class="col-md-4 col-lg-3 form-label">Danh mục</label>
                                             <div class="col-md-8 col-lg-9">
+
                                                 <select asp-for="CategoriId" class="form-select" id="CategoriId">
-                                                    <option value="1">Trang phục</option>
-                                                    <option value="2">Phụ kiện</option>
-                                                    <option value="3">Làm đẹp</option>
+
+                                                    <option value="1">Áo nam</option>
+                                                    <option value="2">Áo nữ</option>
+                                                    <option value="3">Quần nam</option>
+                                                    <option value="4">Quần nữ</option>
+                                                    <option value="5">Phụ kiện</option>
+                                                    <option value="6">Giày nam</option>
+                                                    <option value="7">Giày nữ</option>
                                                 </select>
+                                                
                                             </div>
                                         </div>
                                         <div class="row mb-3">

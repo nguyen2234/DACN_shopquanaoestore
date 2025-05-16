@@ -27,6 +27,74 @@
 */
 /*-------------   Color variabel  --------------*/
 @import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,500,600,700,800|Poppins:400,500,600,700|Yellowtail&display=swap");
+.dropdownad {
+    position: relative;
+    list-style: none;
+}
+
+    .dropdownad > a {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .dropdownad > a:hover {
+            background-color: #0056b3;
+        }
+
+.submenuad {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 180px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.dropdownad:hover .submenuad {
+    display: block;
+}
+
+.submenuad li {
+    list-style: none;
+    border-bottom: 1px solid #eee;
+}
+
+    .submenuad li:last-child {
+        border-bottom: none;
+    }
+
+.submenuad a {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    gap: 8px;
+}
+
+    .submenuad a:hover {
+        background-color: #f8f9fa;
+        color: #000;
+    }
+
+    .submenuad a.text-danger {
+        color: #dc3545;
+    }
 /* line 37, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_color.scss */
 .white-bg {
   background: #ffffff;

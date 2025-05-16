@@ -57,7 +57,7 @@ namespace estore.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(TblMenu mn)
+        public IActionResult Create(Menu mn)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace estore.Areas.Admin.Controllers
             return View(mn);
         }
         [HttpPost]
-        public IActionResult Edit(TblMenu mn)
+        public IActionResult Edit(Menu mn)
         {
             if (ModelState.IsValid)
             {

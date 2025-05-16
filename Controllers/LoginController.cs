@@ -28,7 +28,7 @@ namespace estore.Controllers
             var check = _context.users.Where(u => (u.UserName == user.UserName) && (u.Password == pw)).FirstOrDefault();
             if (check == null)
             {
-                Functions._message = "Invalid username and password!";
+                Functions._message = "Tên đăng nhập hoặc mật khẩu không đúng!";
                 return View();
             }
             Functions._message = string.Empty;
