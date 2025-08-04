@@ -24,6 +24,9 @@
                                             <th class="col-1 text-center">Mức</th>
                                             <th class="col-1 text-center">Bố mẹ</th>
                                             <th class="col-1 text-center">Thứ tự con</th>
+                                            <th class="col-1 text-center">Tên điều khiển</th>
+                                            <th class="col-1 text-center">Tên hành động</th>
+
                                             <th class="col-1 text-center">Ẩn hiện</th>
                                             <th class="col-1 text-center">Chức năng</th>
                                         </tr>
@@ -37,6 +40,8 @@
                                                 <td class="text-center" scope="row">@item.Levels</td>
                                                 <td class="text-center" scope="row">@item.ParentId</td>
                                                 <td class="text-center" scope="row">@item.MenuOrder</td>
+                                                <td class="text-center" scope="row">@item.ControllerName</td>
+                                                <td class="text-center" scope="row">@item.ActionName</td>
                                                 <td class="text-center" scope="row">@item.IsActive</td>
                                                 <td class="text-center" scope="row">
                                                     <a asp-area="Admin" asp-controller="Menu" asp-action="Edit" asp-route-id="@item.MenuId" class="btn btn-primary btn-sm"

@@ -1,0 +1,22 @@
+﻿@model UpdateQuantityViewModel
+
+<main class="main" id="main">
+    <div class="page-title">
+        <h3>Cập nhật số lượng cho sản phẩm: <span class="text-primary">@Model.ProductName</span></h3>
+
+        <form asp-action="UpdateQuantity" method="post">
+            <input type="hidden" asp-for="ProductId" />
+
+            @for (int i = 0; i < Model.Items.Count; i++)
+            {
+                <div class="mb-2">
+                    <label>Size @Model.Items[i].SizeName:</label>
+                    <input type="hidden" asp-for="Items[i].SizeId" />
+                    <input asp-for="Items[i].Quantity" class="form-control" min="0" />
+                </div>
+            }
+
+            <button type="submit" class="btn btn-success">Lưu</button>
+        </form>
+    </div>
+</main>

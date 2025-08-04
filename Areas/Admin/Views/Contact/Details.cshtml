@@ -1,0 +1,31 @@
+﻿@model estore.Models.Contact
+@{
+    ViewData["Title"] = "Chi tiết liên hệ";
+}
+<main id="main" class="main">
+    <h2>Chi tiết liên hệ</h2>
+    <div class="card p-4">
+        <p><strong>Họ tên:</strong> @Model.Name</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Nội dung:</strong> @Model.Message</p>
+        <p><strong>Gửi lúc:</strong> @Model.SentAt.ToString("dd/MM/yyyy HH:mm")</p>
+        <p>
+            <strong>Trạng thái:</strong>
+            @if (Model.IsActive==false)
+            {
+                <span class="badge bg-warning text-dark">Chưa xử lý</span>
+            }
+            else
+            {
+                <span class="badge bg-success">Đã xử lý</span>
+            }
+        </p>
+        @if (Model.IsActive==false)
+        {
+            <form asp-action="MarkAsRead" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-success">Đánh dấu đã xử lý</button>
+            </form>
+        }
+    </div>
+</main>

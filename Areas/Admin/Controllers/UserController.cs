@@ -14,7 +14,6 @@ namespace estore.Areas.Admin.Controllers
         {
             var mnList = _context.users.OrderBy(m => m.UserID).ToList();
             return View(mnList);
-        }
-        
+        }        
     }
 }

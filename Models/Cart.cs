@@ -21,6 +21,5 @@ namespace estore.Models
         public int SizeId { get; set; }
         [ForeignKey("SizeId")]
         public ProductSize ProductSize { get; set; } = null!;
-        public int? Total { get; set; }
     }
 }

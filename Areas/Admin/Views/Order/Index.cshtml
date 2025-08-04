@@ -1,0 +1,82 @@
+﻿@model IEnumerable<estore.Models.Order>
+@using estore.Utilities;
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int STT = 1;
+}
+
+
+<main id="main" class="main">
+    <h2>Quản lý đơn hàng</h2>
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @* <h2 class="mb-4">Danh sách đơn hàng</h2>
+    <p style="color:red;">Số đơn hàng: @Model.Count()</p> *@
+
+    <div class="card recent-sales overflow-auto">
+        <div class="card-body mt-4">
+            <table class="table table-bordered text-center datatable">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">STT</th>
+                        <th class="text-center">Mã đơn</th>
+                        <th class="text-center">Người nhận</th>
+                        <th class="text-center">SĐT</th>
+                        <th class="text-center">Sản phẩm</th>
+                        <th class="text-center">Size</th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        @foreach (var detail in order.OrderDetails)
+                        {
+                            <tr>
+                                <td>@STT</td>
+                                <td>@order.Id</td>
+                                <td>@order.Name</td>
+                                <td>@order.Phone</td>
+                                <td>@detail.Product.Name</td>
+                                <td>@detail.ProductSize.Size</td>
+                                <td>@detail.Quantity</td>
+                                @* <td>@order.CreatedAt.ToString("dd/MM/yyyy")</td> *@
+                                @* <td>
+                                    @order.PayMethod.Name
+                                </td> *@
+                                <td>
+                                    @if (order.Status == "Đã xác nhận")
+                                    {
+                                        <span class="badge bg-success">@order.Status</span>
+                                    }
+                                    else if (order.Status == "Đang xử lý")
+                                    {
+                                        <span class="badge bg-warning text-dark">@order.Status</span>
+                                    }
+                                    else if (order.Status == "Đã hủy")
+                                    {
+                                        <span class="badge bg-danger">@order.Status</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">@order.Status</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    <a asp-action="Information" asp-route-id="@order.Id" class="btn btn-sm btn-primary">Xem</a>
+                                    <a asp-action="Delete" asp-route-id="@order.Id" class="btn btn-sm btn-danger" onclick="return confirm('Xoá đơn hàng này?')">Xoá</a>
+                                </td>
+                            </tr>
+                            STT++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>

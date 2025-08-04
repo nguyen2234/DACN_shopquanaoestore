@@ -1,0 +1,73 @@
+﻿@model estore.Models.Order
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<main class="main"id="main">
+    <h2> Thông tin đơn hàng: #@Model.Id</h2>
+
+    <div class="card p-4 mt-3">
+        <h5 class="mb-3"><i class="bi bi-person"></i> Người nhận:</h5>
+        <p><strong>@Model.Name</strong></p>
+        <p><i class="bi bi-phone"></i> @Model.Phone</p>
+        <p><i class="bi bi-envelope-fill"></i> @Model.Email </p>
+        <p><i class="bi bi-geo-alt-fill"></i> @Model.Address</p>
+
+        <hr />
+
+        <h5 class="mb-3">Thanh toán & Trạng thái:</h5>
+        <p>Phương thức: <strong>@Model.PayMethod?.Name</strong></p>
+        <p>Trạng thái: <span class="badge bg-info">@Model.Status</span></p>
+        <p>Ghi chú: @Model.Note</p>
+        <p>Ngày đặt: @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+
+        <hr />
+
+        <h5 class="mb-3">Sản phẩm đã đặt:</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Size</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderDetails)
+                {
+                    <tr>
+                        <td>@item.Product?.Name</td>
+                        <td>@item.ProductSize?.Size</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price. VNĐ</td>
+                        <td>@(item.Quantity * item.Price) VNĐ</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="text-end fw-bold">
+            Tổng tiền: @Model.TotalPrice VNĐ
+        </div>
+        <form asp-action="UpdateStatus" method="post" class="d-inline">
+            <input type="hidden" name="orderId" value="@Model.Id" />
+            <input type="hidden" name="status" value="Đã xác nhận" />
+            <button type="submit" class="btn btn-success mt-3 me-2">xác nhận đơn hàng</button>
+        </form>
+        <form asp-action="UpdateStatus" method="post" class="d-inline">
+            <input type="hidden" name="orderId" value="@Model.Id" />
+            <input type="hidden" name="status" value="Đã hủy" />
+            <button type="submit" class="btn btn-danger mt-3 me-2">Hủy đơn hàng</button>
+        </form>
+        <form asp-action="UpdateStatus" method="post" class="d-inline">
+            <input type="hidden" name="orderId" value="@Model.Id" />
+            <input type="hidden" name="status" value="Đã hoàn thành" />
+            <button type="submit" class="btn btn-primary mt-3">Hoàn thành đơn hàng</button>
+        </form>
+
+
+        <a asp-action="Index" class="btn btn-secondary mt-3">Quay lại danh sách</a>
+    </div>
+</main>

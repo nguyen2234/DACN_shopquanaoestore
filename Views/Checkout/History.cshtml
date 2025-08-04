@@ -1,0 +1,41 @@
+﻿@model List<estore.Models.Order>
+@{
+    ViewData["Title"] = "Lịch sử đặt hàng";
+    int STT = 1;
+}
+@if(TempData["Success"]!= null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+
+}
+<h2>Lịch sử đơn hàng</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Mã đơn</th>
+            <th>Ngày đặt</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Phương thức</th>
+        </tr>
+    </thead>
+    <tbody>
+      
+        @foreach (var order in Model)
+
+        {
+            
+            <tr>
+                <td>@STT</td>
+                <td>@order.Id</td>
+                <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@order.TotalPrice.ToString("N0") VNĐ</td>
+                <td>@order.Status</td>
+                <td>@order.PayMethod.Name</td> 
+            </tr>
+            STT++;
+        }
+    </tbody>
+</table>

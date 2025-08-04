@@ -5,6 +5,10 @@
     Layout = "/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Chi tiết sản phẩm";
 }
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
 
 <main>
     <div class="container">
@@ -25,21 +29,51 @@
                     <p><strong>Giá:</strong> @Model.Price.ToString("N0") đ</p>
                     <p><strong>Danh mục:</strong> @Model.Categori?.Name</p>
 
-                    <div class="form-group">
-                        <label for="SizeId">Chọn size:</label>
-                        <select name="SizeId" class="form-control" id="SizeId">
-                            <option value="0" disabled>Vui lòng lựa chọn size</option>
-                            <option value="1">S</option>
-                            <option value="2">M</option>
-                            <option value="3">L</option>
-                            <option value="4">XL</option>
-                            <option value="5">XXL</option>
-                        </select>
+                    <div class="form-group mb-4">
+                        <div class="mb-3">
+                            <strong><i class="fa fa-clipboard-list"></i> số lượng sẵn kho theo size:</strong>
+                            <table class="table table-sm table-bordered w-auto mt-2">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Size</th>
+                                        <th>Số lượng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var size in Model.ProductDetails)
+                                    {
+                                        <tr>
+                                            <td>Size @size.ProductSize.Size</td>
+                                            <td><span class="text-primary fw-semibold">@size.Quantity cái</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold" for="SizeId">Chọn size:</label>
+                                <select name="SizeId" class="form-select" id="SizeId" required>
+                                    <option value="0" disabled>Vui lòng lựa chọn size</option>
+                                    <option value="1">S</option>
+                                    <option value="2">M</option>
+                                    <option value="3">L</option>
+                                    <option value="4">XL</option>
+                                    <option value="5">XXL</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold" for="Quantity">Số lượng muốn mua:</label>
+                                <input type="number" name="Quantity" class="form-control" value="1" min="1" max="20" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group mt-2">
-                        <label for="Quantity">Số lượng muốn mua:</label>
-                        <input type="number" name="Quantity" class="form-control w-50" value="1" min="1" />
-                    </div>
+
+
+
+                    
 
                     <button type="submit" class="btn btn-success mt-3">Thêm vào giỏ hàng</button>
                 </div>
@@ -49,7 +83,7 @@
             <div class="col-md-12">
                 <h4 class="mb-3">📌 Mô tả sản phẩm chi tiết</h4>
                 <p style="line-height: 1.8; font-size: 1.05rem;">
-                    @Model.Description
+                    @Model.Contents
                 </p>
             </div>
         </div>

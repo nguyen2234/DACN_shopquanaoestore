@@ -16,7 +16,6 @@ namespace estore.Controllers
         {
             _context = context;
         }
-
         public IActionResult Index()
         {
             return View();

@@ -1,0 +1,50 @@
+﻿@model IList<Products>
+<section class="latest-product-area padding-bottom">
+    <div class="container">
+        
+           
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="section-tittle text-center">
+                        <h2>Sản phẩm bán chạy</h2>
+                    </div>
+                </div>
+            </div>
+              
+        <!-- Nav Card -->
+        <div class="tab-content" id="nav-tabContent">
+            <!-- card one -->
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="row">
+                    @foreach (var t in Model){
+                        
+                    <div class="col-xl-3 col-lg-3 col-md-6">
+                        <div class="single-product mb-60">
+                            <div class="product-img">
+                                    <img src="@t.Images" alt="">
+                                
+                            </div>
+                            <div class="product-caption">
+                                    <h4><a href="/Product/Details/@t.ProductId">@t.Name</a></h4>
+                                <div class="price">
+                                    <ul>
+                                            <li>@t.Price.ToString("N0") VND</li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                       
+                    </div>
+                    }
+                   
+                    
+                </div>
+            </div>
+            <!-- Card two -->          
+        </div>
+        <!-- End Nav Card -->
+    </div>
+
+</section>

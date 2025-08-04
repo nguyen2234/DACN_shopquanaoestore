@@ -37,6 +37,16 @@
                            value="0" placeholder="Lựa chọn thứ tự sắp xếp cho mục..." />
                 </div>
                 <div class="form-group col-md-6 mb-3">
+                    <label>Tên điều khiển</label>
+                    <input type="text" class="form-control" asp-for="ControllerName"
+                           value="0" placeholder="Lựa chọn tên điều khiển..." />
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label>Tên hành động</label>
+                    <input type="text" class="form-control" asp-for="ActionName"
+                           value="0" placeholder="Lựa chọn tên hành động..." />
+                </div>
+                <div class="form-group col-md-6 mb-3">
                     <label>
                         @Html.CheckBox("IsActive", false)
                         ẩn hiện

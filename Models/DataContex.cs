@@ -16,6 +16,10 @@ namespace estore.Models
         public DbSet<Slide> slides { get; set; }
         public DbSet<Categori> categoris { get; set; }
         public DbSet<Cart> carts { get; set; }
-       
+        public DbSet<PayMethod> payMethods { get; set; }
+        public DbSet<Order> orders { get; set; }
+        public DbSet<Contact> contacts { get; set; }
+        public DbSet<OrderDetail> orderDetail { get; set; }
+        
     }
 }

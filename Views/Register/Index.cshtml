@@ -55,27 +55,27 @@
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
-                                        <p class="text-center small">Enter your personal details to create account</p>
+                                        <h5 class="card-title text-center pb-0 fs-4">Tạo tài khoản</h5>
+                                        <p class="text-center small">Nhập thông tin người dùng để tạo tài khoản!</p>
                                     </div>
 
                                     <form class="row g-3 needs-validation" novalidate asp-controller="Register" asp-action="Index">
                                         <div class="col-12">
-                                            <label for="yourName" class="form-label">User Name</label>
+                                            <label for="yourName" class="form-label">Tên đăng nhập</label>
                                             <input type="text" name="username" class="form-control" id="yourName" required asp-for="UserName">
-                                            <div class="invalid-feedback">Please, enter user name!</div>
+                                            <div class="invalid-feedback">Mời nhập tên đăng nhập!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="yourEmail" class="form-label">Your Email</label>
+                                            <label for="yourEmail" class="form-label">Email</label>
                                             <input type="email" name="email" class="form-control" id="yourEmail" required asp-for="Email">
-                                            <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+                                            <div class="invalid-feedback">Trường địa chỉ Email không được để trống!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Password</label>
+                                            <label for="yourPassword" class="form-label">Mật khẩu</label>
                                             <input type="password" name="password" class="form-control" id="yourPassword" required asp-for="Password">
-                                            <div class="invalid-feedback">Please enter your password!</div>
+                                            <div class="invalid-feedback">Trường mật khẩu không được để trống!</div>
                                         </div>
 
                                         <div class="form-group d-none">
@@ -91,28 +91,22 @@
                                         <div class="col-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
-                                                <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
-                                                <div class="invalid-feedback">You must agree before submitting.</div>
+                                                <label class="form-check-label" for="acceptTerms">Tôi đồng ý với  <a href="#">chính sách & quyền hạn</a></label>
+                                                <div class="invalid-feedback">Bạn phải tích chọn đồng ý các quyền.</div>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                                            <button class="btn btn-primary w-100" type="submit">Tạo tài khoản</button>
                                         </div>
                                         <div class="col-12">
-                                            <p class="small mb-0">Already have an account? <a href="Login">Log in</a></p>
+                                            <p class="small mb-0">Bạn đã có sẵn tài khoản? <a href="Login">Đăng nhập</a></p>
                                         </div>
                                     </form>
 
                                 </div>
                             </div>
 
-                            <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                            </div>
+                           
 
                         </div>
                     </div>

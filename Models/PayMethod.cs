@@ -7,10 +7,8 @@ namespace estore.Models
     public class PayMethod
     {
         [Key]
-        public int Id { get; set; }
-        [ForeignKey("Id")]
-        public PayMethod payMethod { get; set; } = null!;
+        public int PaymethodId { get; set; }
         public string? Name { get; set; }
-        public string? Description { get; set; }
+        public ICollection<Order> orders { get; set; }=new List<Order>();
     }
 }

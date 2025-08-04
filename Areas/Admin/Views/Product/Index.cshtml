@@ -1,25 +1,27 @@
-﻿@using estore.Models;
-@model IList<Products>
+﻿@model List<ProductIndexViewModel>
 @{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int STT = 1;
 }
 
 <main id="main" class="main">
     <h2 class="mb-4">Danh sách sản phẩm</h2>
-
-    <a asp-action="Create" class="btn btn-primary mb-3">➕ Thêm sản phẩm</a>
-    <section class="sectio dashboard">
+    <a asp-action="Create" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> Thêm sản phẩm</a>
+    <section class="section dashboard">
         <div class="row">
             <div class="col-12">
                 <div class="card recent-sales overflow-auto">
                     <div class="card-body mt-4">
                         <table class="table table-borderless datatable">
+
                             <thead class="table-dark text-center">
                                 <tr>
-                                    <th class="text-center">#</th>
+                                    <th class="text-center">STT</th>
                                     <th class="text-center">Tên sản phẩm</th>
+                                    <th class="text-center">Ảnh</th>
                                     <th class="text-center">Giá tiền</th>
                                     <th class="text-center">Danh mục</th>
+                                    <th class="text-center">Tổng SL</th>
                                     <th class="text-center">Hiển thị</th>
                                     <th class="text-center">Chức năng</th>
                                 </tr>
@@ -28,10 +30,23 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr class="text-center">
-                                        <td>@item.ProductId</td>
+                                        <td>@STT</td>
                                         <td>@item.Name</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.Images))
+                                            {
+                                                <img src="@item.Images" alt="Ảnh sản phẩm" width="60" height="60" style="object-fit: cover; border-radius: 6px;" />
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Không có ảnh</span>
+                                            }
+                                        </td>
+
+
                                         <td>@item.Price.ToString("N0") đ</td>
-                                        <td>@item.Categori?.Name</td>
+                                        <td>@item.Categori</td>
+                                        <td>@item.TotalQuantity</td>
                                         <td>
                                             @if (item.IsActive == true)
                                             {
@@ -43,6 +58,9 @@
                                             }
                                         </td>
                                         <td>
+                                            <a asp-action="UpdateQuantity" asp-route-id="@item.ProductId" class="btn btn-sm btn-info">
+                                                <i class="bi bi-box-seam"></i> Cập nhật SL
+                                            </a>
                                             <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-warning me-1">
                                                 <i class="bi bi-pencil"></i> Sửa
                                             </a>
@@ -51,14 +69,13 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    STT++;
                                 }
                             </tbody>
-
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 </main>

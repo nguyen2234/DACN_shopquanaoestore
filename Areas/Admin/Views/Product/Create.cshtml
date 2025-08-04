@@ -8,8 +8,8 @@
     </div>
     <div class="container shadow p-5">
         <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="All"></div>
             <div class="form-row">
+                <div asp-validation-summary="All"></div>
                 <div class="form-group">
                     <label asp-for="Name">Tên sản phẩm</label>
                     <input type="text" class="form-control mb-3" asp-for="Name" />
@@ -31,20 +31,26 @@
                     </textarea>
                     <span asp-validation-for="Contents" class="alert-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
+                    <label class="form-label">Chọn ảnh sản phẩm</label>
+                    <input type="file" name="ImageFile" class="form-control" />
+                </div>
+
+                @* <div class="form-group">
                     <label asp-for="Images">Hình ảnh</label>
                     <input type="text" class="form-control mb-3" asp-for="Images" />
-                    <span asp-validation-for="Contents" class="alert-danger"></span>
-                </div>
+                    <span asp-validation-for="Images" class="alert-danger"></span>
+                </div> *@
+
                 <div class="form-group">
                     <label asp-for="Price">Giá sản phẩm</label>
-                    <input type="text" class="form-control mb-3" asp-for="Price" />
+                    <input type="number" class="form-control mb-3" asp-for="Price" />
                     <span asp-validation-for="Price" class="alert-danger"></span>
                 </div>
                 <div class="form-group mb-3">
-                    <label>Chọn danh mục</label>
+                    <label asp-for="CategoriId">Chọn danh mục</label>
                     <select asp-for="CategoriId" class="form-control">
-                        <option value="0">-- Danh mục --</option>
+                        <option value="0" disabled>Vui lòng lựa chọn size</option>
                         <option value="1">Áo nam</option>
                         <option value="2">Áo nữ</option>
                         <option value="3">Quần nam</option>
@@ -53,9 +59,11 @@
                         <option value="6">Giày nam</option>
                         <option value="7">Giày nữ</option>
                     </select>
+                    <span asp-validation-for="CategoriId" class="alert-danger"></span>
+
                 </div>
                 <hr />
-                
+
                 <div class="form-group mt-5 mb-5">
                     <label>
                         @Html.CheckBox("IsActive", false)

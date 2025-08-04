@@ -22,5 +22,7 @@ namespace estore.Models
         public int MenuOrder { get; set; }
 
         public string? Link { get; set; }
+        public string? ControllerName { get; set; }
+        public string? ActionName { get; set; }
     }
 }

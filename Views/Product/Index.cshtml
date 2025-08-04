@@ -1,12 +1,9 @@
 ﻿@using estore.Models;
 @model IList<Products>
-<main>
 
-    <!-- slider Area Start-->
-    <div class="slider-area ">
-        <!-- Mobile Menu -->
-        <div class="single-slider slider-height2 d-flex align-items-center"
-        style="background-image: url('/assets/img/hero/category.jpg');">
+<main>
+    <div class="slider-area">
+        <div class="single-slider slider-height2 d-flex align-items-center" style="background-image: url('/assets/img/hero/category.jpg');">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -18,67 +15,98 @@
             </div>
         </div>
     </div>
-    <!-- slider Area End-->
-    <!-- Latest Products Start --><section class="product_list section_padding">
+
+    <section class="product_list section_padding" style="padding: 50px 0px">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="product_sidebar">
-                        <div class="single_sedebar">
-                            <form action="#">
-                                <input type="text" name="#" placeholder="Search keyword">
-                                <i class="ti-search"></i>
-                            </form>
-                        </div>
-                        <div class="single_sedebar">
-                            <div class="select_option">
-                                <div class="select_option_list">Category <i class="right fas fa-caret-down"></i> </div>
-                                <div class="select_option_dropdown">
-                                    <p><a href="#">Category 1</a></p>
-                                    <p><a href="#">Category 2</a></p>
-                                    <p><a href="#">Category 3</a></p>
-                                    <p><a href="#">Category 4</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single_sedebar">
-                            <div class="select_option">
-                                <div class="select_option_list">Type <i class="right fas fa-caret-down"></i> </div>
-                                <div class="select_option_dropdown">
-                                    <p><a href="#">Type 1</a></p>
-                                    <p><a href="#">Type 2</a></p>
-                                    <p><a href="#">Type 3</a></p>
-                                    <p><a href="#">Type 4</a></p>
-                                </div>
-                            </div>
+            
+            <form method="get" action="/Product/Index" class="mb-4">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label">Tìm kiếm:</label>
+                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm..." value="@ViewBag.CurrentSearch" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Loại sản phẩm:</label>
+                        <select name="categoryId" class="form-select">
+                            <option value="">-- Tất cả --</option>
+                            @foreach (var item in (ViewBag.Categories as List<Categori>) ?? new List<Categori>())
+                            {
+                                var selected = ViewBag.CurrentCategoryId?.ToString() == item.CategoriId.ToString();
+
+                                if (selected)
+                                {
+                                    <option value="@item.CategoriId" selected>@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.CategoriId">@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label class="form-label">Khoảng giá:</label>
+                        <div class="d-flex gap-2">
+                            <input type="number" name="minPrice" class="form-control" placeholder="Từ" value="@ViewBag.MinPrice" />
+                            <input type="number" name="maxPrice" class="form-control" placeholder="Đến" value="@ViewBag.MaxPrice" />
                         </div>
                     </div>
+
+                    <div class="col-md-2 d-grid">
+                        <button type="submit" class="btn btn-primary">Lọc</button>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="product_list">
-                        <div class="row">
-                            @foreach (var t in Model)
-                            {
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="single_product_item">
-                                        <img src="@t.Images" alt="hinh anh san pham" class="img-fluid">
-                                        <h3>
-                                            <a href="/Product/Details/@t.ProductId">
-                                                @t.Name
-                                            </a>
-                                        </h3>
-                                        <p>@t.Price VND</p>
+            </form>
+
+         
+            <div class="product_list">
+                <div class="row">
+                    @if (!Model.Any())
+                    {
+                        <div class="col-12"><p>Không tìm thấy sản phẩm phù hợp.</p></div>
+                    }
+                    else
+                    {
+                        @foreach (var t in Model)
+                        {
+                            <div class="col-xl-4 col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm border-0">
+                                    <div class="ratio ratio-1x1" style="overflow: hidden;">
+                                        <img src="@t.Images" alt="@t.Name" class="card-img-top img-fluid" style="object-fit: cover;" />
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-truncate">
+                                            <a href="/Product/Details/@t.ProductId" class="text-decoration-none text-dark">@t.Name</a>
+                                        </h5>
+                                        <p class="card-text fw-bold">@t.Price.ToString("N0") VND</p>
                                     </div>
                                 </div>
-                            }
-                        </div>
-                        <div class="load_more_btn text-center">
-                            <a href="#" class="btn_3">Load More</a>
-                        </div>
-                    </div>
+                            </div>
+
+                        }
+                    }
                 </div>
+
+                @if (ViewBag.TotalPages > 1)
+                {
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                                    <a class="page-link"
+                                       href="@Url.Action("Index", new { page = i, search = ViewBag.CurrentSearch, categoryId = ViewBag.CurrentCategoryId, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice })">
+                                        @i
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
             </div>
         </div>
     </section>
-    <!--     -->
 </main>

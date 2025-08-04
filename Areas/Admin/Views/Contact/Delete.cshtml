@@ -1,0 +1,17 @@
+﻿@model estore.Models.Contact
+@{
+    ViewData["Title"] = "Xác nhận xoá liên hệ";
+}
+<main id="main" class="main">
+    <h2>Xác nhận xoá liên hệ</h2>
+    <div class="card p-4">
+        <p><strong>Họ tên:</strong> @Model.Name</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Nội dung:</strong> @Model.Message</p>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">Xoá</button>
+            <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
+        </form>
+    </div>
+</main>

@@ -1,10 +1,42 @@
 ﻿ @model IList<Menu>;
  @using estore.Utilities;
 <header>
+    <style>
+        .header-area,
+        .main-header,
+        .header-bottom {
+            position: relative;
+            z-index: 1000;
+        }
+        .slider-area,
+        .product_image_area,
+        .owl-carousel {
+            overflow: visible !important;
+            position: relative;
+            z-index: 1;
+        }
+        .main-menu li {
+            position: relative;
+        }
+
+        .main-menu .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 9999;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .main-menu li:hover > .submenu {
+            display: block;
+        }
+    </style>
+
     <div class="header-area">
-        <div class="main-header ">
-            <div class="header-top top-bg d-none d-lg-block">
-            </div>
+        <div class="main-header ">           
             <div class="header-bottom  header-sticky">
                 <div class="container-fluid">
                     <div class="row align-items-center">
@@ -25,7 +57,7 @@
                                             var sMenu = Model.Where(s => s.ParentId == pID).OrderBy(s => s.MenuOrder).ToList();
                                             if (sMenu.Count == 0)
                                             {
-                                                <li><a href="@menu.Link">@menu.MenuName</a></li>
+                                                <li><a asp-controller="@menu.ControllerName" asp-action="@menu.ActionName">@menu.MenuName</a></li>
                                             }
                                             else
                                             {
@@ -34,7 +66,7 @@
                                                     <ul class="submenu">
                                                         @foreach (var smn in sMenu)
                                                         {
-                                                            <li><a href="@menu.Link">@smn.MenuName</a></li>
+                                                            <li><a asp-controller="@smn.ControllerName" asp-action="@smn.ActionName">@smn.MenuName</a></li>
                                                         }
                                                     </ul>
                                                 </li>
@@ -47,9 +79,9 @@
                             </div>
                         </div>
                         <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
-                            <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">                              
-                                <li>
-                                    <div class="shopping-card">
+                            <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between" >                              
+                                <li style="content:none;">
+                                    <div class="shopping-card" >
                                         <a asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i></a>
                                     </div>
                                 </li>
@@ -63,7 +95,7 @@
                                         </a>
                                         <ul class="submenuad">
                                             <li>
-                                                <a asp-controller="Order" asp-action="History">
+                                                <a asp-controller="Checkout" asp-action="History">
                                                     <i class="bi bi-clock-history"></i> Lịch sử đặt hàng
                                                 </a>
                                             </li>

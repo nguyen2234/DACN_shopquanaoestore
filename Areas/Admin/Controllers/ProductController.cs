@@ -16,14 +16,25 @@ namespace estore.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var productlist = _context.tblProducts
-              .Include(p => p.Categori)           // Load danh mục liên quan
-              .OrderBy(p => p.CategoriId)         // Sắp xếp theo danh mục
-              .ToList();
+            var productList = _context.tblProducts
+                .Include(p => p.Categori)
+                .Select(p => new ProductIndexViewModel
+                { Images = p.Images,
+                    ProductId = p.ProductId,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Categori = p.Categori.Name,
+                    IsActive = p.IsActive,
+                    TotalQuantity = _context.TblProductDetails
+                                        .Where(d => d.ProductId == p.ProductId)
+                                        .Sum(d => (int?)d.Quantity) ?? 0
+                })
+                .ToList();
 
-            return View(productlist);
+            return View(productList);
         }
 
+     
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -40,7 +51,7 @@ namespace estore.Areas.Admin.Controllers
             if (mn == null)
                 return NotFound();
             var details = _context.TblProductDetails.Where(o => o.ProductId == id).ToList();
-            _context.TblProductDetails.RemoveRange(details); //removerange xóa nhieudong
+            _context.TblProductDetails.RemoveRange(details);
 
             _context.tblProducts.Remove(mn);
             _context.SaveChanges();
@@ -65,61 +76,134 @@ namespace estore.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Products pd, int selectedSizeId, int quantity)
+        public IActionResult Create(Products pd, IFormFile ImageFile)
         {
-            // Thêm sản phẩm
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                var fileName = Path.GetFileName(ImageFile.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/product", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    ImageFile.CopyTo(stream);
+                }
+
+                pd.Images = "/uploads/product/" + fileName; 
+            }
+
             _context.tblProducts.Add(pd);
             _context.SaveChanges();
 
-            // Nếu có chọn size và số lượng > 0 thì thêm ProductDetails
-            if (selectedSizeId > 0 && quantity > 0)
+            var sizeList = _context.tblProductSizes.ToList();
+            foreach (var size in sizeList)
             {
                 var detail = new ProductDetails
                 {
                     ProductId = pd.ProductId,
-                    SizeId = selectedSizeId,
-                    Quantity = quantity
+                    SizeId = size.SizeId,
+                    Quantity = 0
                 };
                 _context.TblProductDetails.Add(detail);
-                _context.SaveChanges();
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+       
+        public IActionResult Edit(int id)
+        {
+            var product = _context.tblProducts.Find(id);
+            if (product == null) return NotFound();
+
+            var vm = new ProductEditViewModel
+            {
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Title = product.Title,
+                Contents = product.Contents,
+                Price = product.Price,
+                CategoriId = product.CategoriId,
+                IsActive = product.IsActive,
+                Images = product.Images
+            };
+
+            ViewBag.mnList = new SelectList(_context.categoris.ToList(), "CategoriId", "Name", product.CategoriId);
+            return View(vm);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(ProductEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.mnList = new SelectList(_context.categoris.ToList(), "CategoriId", "Name", model.CategoriId);
+                return View(model);
             }
 
-            return RedirectToAction("Index");
-        }
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-                return NotFound();
-            var mn = _context.tblProducts.Find(id);
-            if (mn == null)
-                return NotFound();
-            var mnList = (from m in _context.tblProducts
-                          select new SelectListItem()
-                          {
-                              Text = m.CategoriId.ToString(),
-                              Value = m.ProductId.ToString(),
-                          }).ToList();
-            mnList.Insert(0, new SelectListItem()
-            {
-                Text = "------Lựa chọn------",
-                Value = string.Empty
-            });
-            ViewBag.mnList = mnList;
-            return View(mn);
+            var product = _context.tblProducts.Find(model.ProductId);
+            if (product == null) return NotFound();
 
-        }
-        [HttpPost]
-        public IActionResult Edit(Products pd)
-        {
-            var item = _context.tblProducts.Include(o => o.ProductDetails).FirstOrDefault(p=>p.ProductId == pd.ProductId);
-            if (item == null)
-                return NotFound();
-            var details = _context.TblProductDetails.Where(o => o.ProductId == pd.ProductId).ToList();
-            _context.TblProductDetails.UpdateRange(details);
-            _context.tblProducts.Update(pd);
+            product.Name = model.Name;
+            product.Title = model.Title;
+            product.Contents = model.Contents;
+            product.Price = model.Price;
+            product.CategoriId = model.CategoriId;
+            product.IsActive = model.IsActive;
+            product.Images = model.Images;
+
             _context.SaveChanges();
             return RedirectToAction("Index");
+        }     
+
+        public IActionResult UpdateQuantity(int id)
+        {
+            var product = _context.tblProducts.FirstOrDefault(p => p.ProductId == id);
+            if (product == null) return NotFound();
+
+            var details = _context.TblProductDetails
+                .Include(p => p.ProductSize)
+                .Where(p => p.ProductId == id)
+                .ToList();
+
+            var vm = new UpdateQuantityViewModel
+            {
+                ProductId = product.ProductId,
+                ProductName = product.Name,
+                Items = details.Select(d => new UpdateQuantityViewModel.QuantityItem
+                {
+                    SizeId = d.SizeId,
+                    SizeName = d.ProductSize.Size,
+                    Quantity = d.Quantity
+                }).ToList()
+            };
+
+            return View(vm);
         }
+        [HttpPost]
+        public IActionResult UpdateQuantity(UpdateQuantityViewModel vm)
+        {
+            foreach (var item in vm.Items)
+            {
+                var detail = _context.TblProductDetails
+                    .FirstOrDefault(p => p.ProductId == vm.ProductId && p.SizeId == item.SizeId);
+                if (detail != null)
+                {
+                    detail.Quantity = item.Quantity;
+                }
+            }
+
+            _context.SaveChanges();
+            TempData["Message"] = "Cập nhật số lượng thành công!";
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
+
 
     }
 }

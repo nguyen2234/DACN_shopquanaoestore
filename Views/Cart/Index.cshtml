@@ -7,6 +7,11 @@
 @{
     decimal total = 0;
     int STT = 1;
+   
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
 }
 <style>
     .btn-delete {
@@ -115,8 +120,9 @@
                     </tbody>
                 </table>
                 <div class="checkout_btn_inner float-right">
-                    <a class="btn_1" href="#">Continue Shopping</a>
-                    <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+                    <a  asp-controller="Product" asp-action="Index" class="btn_1">Tiếp tục mua sắm</a>
+                    <a asp-controller="Checkout" asp-action="Index" class="btn_1 checkout_btn_1">Tới trang thanh toán</a>
+                
                 </div>
             </div>
         </div>

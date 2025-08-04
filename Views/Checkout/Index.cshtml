@@ -1,0 +1,145 @@
+﻿@model estore.Models.CheckoutView
+@{
+
+    decimal TotalAmount = 0;
+}
+<form asp-action="Checkout" method="post">
+    <div class="slider-area ">
+        <!-- Mobile Menu -->
+        <div class="single-slider slider-height2 d-flex align-items-center" data-background="/assets/img/hero/category.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            <h2>Checkout</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="checkout_area section_padding" style="padding:30px ">
+        <div class="container">
+            <div class="cupon_area">
+                @* <div class="check_title">
+                    <h2>
+                        NHẬP MÃ GIẢM GIÁ
+                        <a href="#">Nhập mã giảm giá của bạn</a>
+                    </h2>
+                </div>
+                <input type="text" placeholder="Nhập mã giảm giá" />
+                <a class="tp_btn" href="#">Áp mã giảm giá</a> *@
+            </div>
+            <div class="billing_details">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h3>Thông tin người nhận</h3>
+                        <div class="row contact_form" novalidate="novalidate">
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" name="Name" placeholder="Họ & tên"  required/>
+                            </div>
+                            
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" name="Phone" placeholder="Số điện thoại" required />
+                            </div>
+                            
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" name="Address" placeholder="Địa chỉ cụ thể" required />
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <textarea class="form-control" name="Note" rows="1" placeholder="Ghi chú"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="order_box">
+                            <h2>Đơn hàng của bạn</h2>
+                            <style>
+                                .order-item {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    padding: 6px 0;
+                                    border-bottom: 1px dashed #ddd;
+                                    font-size: 15px;
+                                    color: dodgerblue;
+                                }
+
+                                    .order-item .name {
+                                        flex: 2;
+                                    }
+
+                                    .order-item .size, .order-item .qty {
+                                        flex: 1;
+                                        text-align: center;
+                                    }
+
+                                    .order-item .price {
+                                        flex: 1.2;
+                                        text-align: right;
+                                        font-weight: 500;
+                                    }
+
+                                .order-header {
+                                    border-bottom: 2px solid #ccc;
+                                    padding-bottom: 8px;
+                                    margin-bottom: 8px;
+                                }
+                            </style>
+
+                            <ul class="list">
+                                <li class="order-item order-header">
+                                    <span class="name">Sản phẩm</span>
+                                    <span class="size">Size</span>
+                                    <span class="qty">Số lượng</span>
+                                    <span class="price">Thành tiền</span>
+                                </li>
+
+                                @foreach (var item in Model.CartItems)
+                                {
+                                    var itemTotal = item.Price * item.Quantity;
+                                    TotalAmount += itemTotal;
+                                    <li class="order-item">
+                                        <span class="name">@item.Products.Name</span>
+                                        <span class="size">@item.ProductSize.Size</span>
+                                        <span class="qty">@item.Quantity</span>
+                                        <span class="price">@itemTotal.ToString("N0") VNĐ</span>
+                                    </li>
+                                }
+                            </ul>
+                            <ul class="list list_2">
+
+                                <li>
+                                    <a href="#">
+                                        Tổng thanh toán
+                                        <span>$2210.00</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <h2 style="margin-top:10px;">Phương thức thanh toán</h2>
+                            <div class="payment_item">
+                                <div class="radion_btn">
+                                    <input type="radio" name="PaymethodId" value="1" id="f-option5" />
+                                    <label for="f-option5">Chuyển khoản</label>
+                                    <div class="check"></div>
+                                </div>
+
+                            </div>
+                            <div class="payment_item active">
+                                <div class="radion_btn">
+                                    <input type="radio" name="PaymethodId" value="2" id="f-option6" />
+                                    <label for="f-option6">Tiền mặt</label>
+                                    <img src="img/product/single-product/card.jpg" alt="" />
+                                    <div class="check"></div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn_3 w-100">Thanh toán</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</form>
